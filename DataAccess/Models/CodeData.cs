@@ -1,4 +1,4 @@
-﻿namespace ScanApp.Helpers;
+﻿namespace DataAccess.Models;
 
 public class CodeData
 {

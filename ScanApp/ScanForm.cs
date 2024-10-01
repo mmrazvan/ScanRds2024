@@ -12,6 +12,7 @@ public partial class ScanForm : Form
 	private readonly OpisRepo _opisRepo;
 	private readonly HeaderRepo _headerRepo;
 	private string _workFolder = string.Empty;
+	private readonly UIMethods _uiMethods;
 
 	public ScanForm( RDSContext context )
 	{
@@ -20,15 +21,22 @@ public partial class ScanForm : Form
 		_opisRepo = new OpisRepo(_context);
 		_headerRepo = new HeaderRepo(_context);
 		_workFolder = Settings.Default.WorkFolder;
+		_uiMethods = new UIMethods(_opisRepo, _headerRepo);
 	}
 
 	private async void Button1_Click( object sender, EventArgs e )
 	{
-		ScanHelper scanHelper = new ScanHelper(_opisRepo, _headerRepo);
-		string text = textBoxScan.Text.ToUpper();
-		var a = ScanHelper.CodeVerification(text);
-		if (a is not null)
-			await scanHelper.ProcessCodeData(a);
+		List<string> a = await _opisRepo.GetRemainingCountiesAsync();
+		List<CountyList> b = [];
+		foreach (var item in a)
+		{
+			CountyList county = new CountyList
+			{
+				CountyName = item,
+				RemainingBoxes = await _opisRepo.GetCountyRemainingBoxes(item)
+			};
+			b.Add(county);
+		}
 	}
 
 	private async void ScanForm_Load( object sender, EventArgs e )
@@ -49,6 +57,16 @@ public partial class ScanForm : Form
 			_workFolder = fbd.SelectedPath;
 			Settings.Default.WorkFolder = _workFolder;
 			Settings.Default.Save();
+		}
+	}
+
+	private async void TextBoxScan_KeyDown( object sender, KeyEventArgs e )
+	{
+		if (e.KeyCode == Keys.Enter)
+		{
+			await _uiMethods.ProcessScan(textBoxScan.Text);
+			textBoxScan.Clear();
+			textBoxScan.Focus();
 		}
 	}
 }

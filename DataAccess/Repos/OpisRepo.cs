@@ -65,4 +65,46 @@ public class OpisRepo
 			throw;
 		}
 	}
+
+	public async Task<List<int>> GetCountyRemainingBoxes( string county )
+	{
+		try
+		{
+			return await _context.Opis.Where(h => h.Judet == county && h.Term != "x").Select(c => c.NumarCutie).ToListAsync();
+		}
+		catch (Exception ex)
+		{
+			// Handle the exception here
+			// Log the error or perform any necessary actions
+			throw;
+		}
+	}
+
+	public async Task<List<string>> GetCountiesAsync()
+	{
+		try
+		{
+			return await _context.Opis.Select(c => c.Judet).Distinct().ToListAsync();
+		}
+		catch (Exception ex)
+		{
+			// Handle the exception here
+			// Log the error or perform any necessary actions
+			throw;
+		}
+	}
+
+	public async Task<List<string>> GetRemainingCountiesAsync()
+	{
+		try
+		{
+			return await _context.Opis.Where(h => h.Term != "x").Select(c => c.Judet).Distinct().ToListAsync();
+		}
+		catch (Exception ex)
+		{
+			// Handle the exception here
+			// Log the error or perform any necessary actions
+			throw;
+		}
+	}
 }

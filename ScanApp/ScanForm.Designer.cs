@@ -51,6 +51,7 @@ partial class ScanForm
 		textBoxScan.Name = "textBoxScan";
 		textBoxScan.Size = new Size(277, 23);
 		textBoxScan.TabIndex = 1;
+		textBoxScan.KeyDown +=  TextBoxScan_KeyDown ;
 		// 
 		// progressBarScan
 		// 

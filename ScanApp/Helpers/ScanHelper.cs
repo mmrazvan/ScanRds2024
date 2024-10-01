@@ -1,4 +1,5 @@
-﻿using DataAccess.Repos;
+﻿using DataAccess.Models;
+using DataAccess.Repos;
 
 namespace ScanApp.Helpers;
 
