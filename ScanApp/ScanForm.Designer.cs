@@ -33,45 +33,65 @@ partial class ScanForm
 		progressBarScan = new ProgressBar();
 		labelProgress = new Label();
 		buttonSelectWorkfolder = new Button();
+		listBoxCounty = new ListBox();
+		checkedListBox1 = new CheckedListBox();
+		buttonSelectAll = new Button();
+		groupBox1 = new GroupBox();
+		groupBox2 = new GroupBox();
+		groupBox3 = new GroupBox();
+		labelStatus = new Label();
+		listBoxDetails = new ListBox();
+		button2 = new Button();
+		groupBox1.SuspendLayout();
+		groupBox2.SuspendLayout();
+		groupBox3.SuspendLayout();
 		SuspendLayout();
 		// 
 		// button1
 		// 
-		button1.Location = new Point(295, 13);
+		button1.Anchor =     AnchorStyles.Top  |  AnchorStyles.Right ;
+		button1.Location = new Point(250, 18);
 		button1.Name = "button1";
-		button1.Size = new Size(75, 23);
+		button1.Size = new Size(120, 38);
 		button1.TabIndex = 0;
-		button1.Text = "button1";
+		button1.Text = "Complete";
 		button1.UseVisualStyleBackColor = true;
 		button1.Click +=  Button1_Click ;
 		// 
 		// textBoxScan
 		// 
-		textBoxScan.Location = new Point(12, 13);
+		textBoxScan.Anchor = AnchorStyles.Top;
+		textBoxScan.Font = new Font("Segoe UI", 18F);
+		textBoxScan.Location = new Point(344, 22);
+		textBoxScan.MinimumSize = new Size(286, 39);
 		textBoxScan.Name = "textBoxScan";
-		textBoxScan.Size = new Size(277, 23);
+		textBoxScan.Size = new Size(286, 39);
 		textBoxScan.TabIndex = 1;
 		textBoxScan.KeyDown +=  TextBoxScan_KeyDown ;
 		// 
 		// progressBarScan
 		// 
-		progressBarScan.Location = new Point(12, 57);
+		progressBarScan.Anchor =      AnchorStyles.Top  |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		progressBarScan.Location = new Point(6, 67);
 		progressBarScan.Name = "progressBarScan";
-		progressBarScan.Size = new Size(950, 23);
+		progressBarScan.Size = new Size(937, 36);
 		progressBarScan.TabIndex = 2;
 		// 
 		// labelProgress
 		// 
-		labelProgress.AutoSize = true;
-		labelProgress.Location = new Point(461, 83);
+		labelProgress.Anchor =      AnchorStyles.Top  |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		labelProgress.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+		labelProgress.Location = new Point(6, 106);
 		labelProgress.Name = "labelProgress";
-		labelProgress.Size = new Size(38, 15);
+		labelProgress.Size = new Size(937, 27);
 		labelProgress.TabIndex = 3;
 		labelProgress.Text = "label1";
+		labelProgress.TextAlign = ContentAlignment.MiddleCenter;
 		// 
 		// buttonSelectWorkfolder
 		// 
-		buttonSelectWorkfolder.Location = new Point(12, 462);
+		buttonSelectWorkfolder.Anchor =     AnchorStyles.Bottom  |  AnchorStyles.Left ;
+		buttonSelectWorkfolder.Location = new Point(12, 533);
 		buttonSelectWorkfolder.Name = "buttonSelectWorkfolder";
 		buttonSelectWorkfolder.Size = new Size(117, 23);
 		buttonSelectWorkfolder.TabIndex = 5;
@@ -79,21 +99,130 @@ partial class ScanForm
 		buttonSelectWorkfolder.UseVisualStyleBackColor = true;
 		buttonSelectWorkfolder.Click +=  ButtonSelectWorkfolder_Click ;
 		// 
+		// listBoxCounty
+		// 
+		listBoxCounty.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Right ;
+		listBoxCounty.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+		listBoxCounty.FormattingEnabled = true;
+		listBoxCounty.ItemHeight = 20;
+		listBoxCounty.Location = new Point(6, 18);
+		listBoxCounty.Name = "listBoxCounty";
+		listBoxCounty.Size = new Size(238, 364);
+		listBoxCounty.TabIndex = 6;
+		listBoxCounty.SelectedValueChanged +=  ListBoxCounty_SelectedValueChanged ;
+		// 
+		// checkedListBox1
+		// 
+		checkedListBox1.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Right ;
+		checkedListBox1.Font = new Font("Segoe UI", 11F);
+		checkedListBox1.FormattingEnabled = true;
+		checkedListBox1.Location = new Point(250, 62);
+		checkedListBox1.Name = "checkedListBox1";
+		checkedListBox1.Size = new Size(120, 246);
+		checkedListBox1.TabIndex = 7;
+		// 
+		// buttonSelectAll
+		// 
+		buttonSelectAll.Anchor =     AnchorStyles.Bottom  |  AnchorStyles.Right ;
+		buttonSelectAll.Location = new Point(250, 351);
+		buttonSelectAll.Name = "buttonSelectAll";
+		buttonSelectAll.Size = new Size(120, 45);
+		buttonSelectAll.TabIndex = 8;
+		buttonSelectAll.Text = "Select all";
+		buttonSelectAll.UseVisualStyleBackColor = true;
+		buttonSelectAll.Click +=  ButtonSelectAll_Click ;
+		// 
+		// groupBox1
+		// 
+		groupBox1.Anchor =      AnchorStyles.Top  |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		groupBox1.Controls.Add(textBoxScan);
+		groupBox1.Controls.Add(progressBarScan);
+		groupBox1.Controls.Add(labelProgress);
+		groupBox1.Location = new Point(12, 12);
+		groupBox1.MinimumSize = new Size(300, 118);
+		groupBox1.Name = "groupBox1";
+		groupBox1.Size = new Size(950, 136);
+		groupBox1.TabIndex = 9;
+		groupBox1.TabStop = false;
+		groupBox1.Text = "Scan area";
+		// 
+		// groupBox2
+		// 
+		groupBox2.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Right ;
+		groupBox2.Controls.Add(listBoxCounty);
+		groupBox2.Controls.Add(button1);
+		groupBox2.Controls.Add(buttonSelectAll);
+		groupBox2.Controls.Add(checkedListBox1);
+		groupBox2.Location = new Point(586, 154);
+		groupBox2.Name = "groupBox2";
+		groupBox2.Size = new Size(376, 402);
+		groupBox2.TabIndex = 10;
+		groupBox2.TabStop = false;
+		groupBox2.Text = "Manual scan area";
+		// 
+		// groupBox3
+		// 
+		groupBox3.Anchor =       AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		groupBox3.Controls.Add(labelStatus);
+		groupBox3.Controls.Add(listBoxDetails);
+		groupBox3.Location = new Point(12, 154);
+		groupBox3.Name = "groupBox3";
+		groupBox3.Size = new Size(568, 372);
+		groupBox3.TabIndex = 11;
+		groupBox3.TabStop = false;
+		groupBox3.Text = "Statistics area";
+		// 
+		// labelStatus
+		// 
+		labelStatus.Anchor =       AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		labelStatus.BorderStyle = BorderStyle.FixedSingle;
+		labelStatus.Font = new Font("Segoe UI", 10F);
+		labelStatus.Location = new Point(298, 19);
+		labelStatus.Name = "labelStatus";
+		labelStatus.Size = new Size(264, 343);
+		labelStatus.TabIndex = 1;
+		labelStatus.Text = "label1";
+		// 
+		// listBoxDetails
+		// 
+		listBoxDetails.Anchor =       AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		listBoxDetails.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+		listBoxDetails.FormattingEnabled = true;
+		listBoxDetails.ItemHeight = 20;
+		listBoxDetails.Location = new Point(6, 18);
+		listBoxDetails.Name = "listBoxDetails";
+		listBoxDetails.Size = new Size(286, 344);
+		listBoxDetails.TabIndex = 0;
+		// 
+		// button2
+		// 
+		button2.Anchor =     AnchorStyles.Bottom  |  AnchorStyles.Left ;
+		button2.Location = new Point(135, 533);
+		button2.Name = "button2";
+		button2.Size = new Size(75, 23);
+		button2.TabIndex = 12;
+		button2.Text = "button2";
+		button2.UseVisualStyleBackColor = true;
+		button2.Click +=  Button2_Click ;
+		// 
 		// ScanForm
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
 		AutoScaleMode = AutoScaleMode.Font;
-		ClientSize = new Size(974, 497);
+		ClientSize = new Size(974, 568);
+		Controls.Add(button2);
+		Controls.Add(groupBox3);
+		Controls.Add(groupBox2);
+		Controls.Add(groupBox1);
 		Controls.Add(buttonSelectWorkfolder);
-		Controls.Add(labelProgress);
-		Controls.Add(progressBarScan);
-		Controls.Add(textBoxScan);
-		Controls.Add(button1);
 		Name = "ScanForm";
 		Text = "Scan";
 		Load +=  ScanForm_Load ;
+		groupBox1.ResumeLayout(false);
+		groupBox1.PerformLayout();
+		groupBox2.ResumeLayout(false);
+		groupBox3.ResumeLayout(false);
 		ResumeLayout(false);
-		PerformLayout();
 	}
 
 	#endregion
@@ -103,4 +232,13 @@ partial class ScanForm
 	private ProgressBar progressBarScan;
 	private Label labelProgress;
 	private Button buttonSelectWorkfolder;
+	private ListBox listBoxCounty;
+	private CheckedListBox checkedListBox1;
+	private Button buttonSelectAll;
+	private GroupBox groupBox1;
+	private GroupBox groupBox2;
+	private GroupBox groupBox3;
+	private Button button2;
+	private ListBox listBoxDetails;
+	private Label labelStatus;
 }

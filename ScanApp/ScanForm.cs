@@ -13,6 +13,7 @@ public partial class ScanForm : Form
 	private readonly HeaderRepo _headerRepo;
 	private string _workFolder = string.Empty;
 	private readonly UIMethods _uiMethods;
+	private readonly ScanHelper _scanHelper;
 
 	public ScanForm( RDSContext context )
 	{
@@ -22,28 +23,43 @@ public partial class ScanForm : Form
 		_headerRepo = new HeaderRepo(_context);
 		_workFolder = Settings.Default.WorkFolder;
 		_uiMethods = new UIMethods(_opisRepo, _headerRepo);
+		_scanHelper = new ScanHelper(_opisRepo, _headerRepo);
 	}
 
 	private async void Button1_Click( object sender, EventArgs e )
 	{
-		List<string> a = await _opisRepo.GetRemainingCountiesAsync();
-		List<CountyList> b = [];
-		foreach (var item in a)
+		foreach (var item in checkedListBox1.CheckedItems)
 		{
-			CountyList county = new CountyList
-			{
-				CountyName = item,
-				RemainingBoxes = await _opisRepo.GetCountyRemainingBoxes(item)
-			};
-			b.Add(county);
+			var opis = await _opisRepo.GetOpisByIdAsync(( int ) item);
+			opis.Term = "x";
+			opis.Data = DateTime.Now;
+			await _opisRepo.UpdateOpisAsync(opis);
 		}
+		checkedListBox1.Items.Clear();
+		try
+		{
+			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
+		}
+		catch (Exception ex)
+		{
+			labelStatus.Text = ex.Message;
+		}
+		UIMethods.PopulateListBoxDetails(listBoxDetails, await _scanHelper.GetDaysWithShifts());
+		textBoxScan.Focus();
 	}
 
 	private async void ScanForm_Load( object sender, EventArgs e )
 	{
-		var totalInvoices = await _opisRepo.GetTotalInvoicesAsync();
-		var remainingInvoices = await _opisRepo.GetRemainingInvoicesAsync();
-		ProgressHelper.UpdateProgressbar(progressBarScan, totalInvoices - remainingInvoices, totalInvoices, labelProgress);
+		try
+		{
+			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
+			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
+			UIMethods.PopulateListBoxDetails(listBoxDetails, await _scanHelper.GetDaysWithShifts());
+		}
+		catch (Exception ex)
+		{
+			labelStatus.Text = ex.Message;
+		}
 		textBoxScan.Focus();
 	}
 
@@ -65,8 +81,37 @@ public partial class ScanForm : Form
 		if (e.KeyCode == Keys.Enter)
 		{
 			await _uiMethods.ProcessScan(textBoxScan.Text);
+			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
+			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
 			textBoxScan.Clear();
 			textBoxScan.Focus();
+		}
+	}
+
+	private async void ListBoxCounty_SelectedValueChanged( object sender, EventArgs e )
+	{
+		if (listBoxCounty.SelectedItem is not null)
+		{
+			try
+			{
+				await _uiMethods.PopulateBoxesCheckListbox(checkedListBox1, listBoxCounty.SelectedItem.ToString());
+			}
+			catch (Exception ex)
+			{
+				labelStatus.Text = ex.Message;
+			}
+		}
+	}
+
+	private async void Button2_Click( object sender, EventArgs e )
+	{
+	}
+
+	private void ButtonSelectAll_Click( object sender, EventArgs e )
+	{
+		for (int i = 0; i < checkedListBox1.Items.Count; i++)
+		{
+			checkedListBox1.SetItemChecked(i, true);
 		}
 	}
 }

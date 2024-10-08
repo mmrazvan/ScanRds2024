@@ -17,6 +17,6 @@ public class ProgressHelper
 
 	private static string CalculatePercentage( int value, int max )
 	{
-		return $"{( int ) ( ( double ) value / max * 100 )}%";
+		return $"{( ( double ) value / max * 100 ).ToString("0.00")}%";
 	}
 }

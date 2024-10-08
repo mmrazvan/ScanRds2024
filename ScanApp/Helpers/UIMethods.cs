@@ -1,4 +1,5 @@
-﻿using DataAccess.Repos;
+﻿using DataAccess.Models;
+using DataAccess.Repos;
 
 namespace ScanApp.Helpers;
 
@@ -20,5 +21,66 @@ public class UIMethods
 		var a = ScanHelper.CodeVerification(text);
 		if (a is not null)
 			await scanHelper.ProcessCodeData(a);
+	}
+
+	public async Task PopulateRemainingCountyList( ListBox listBox )
+	{
+		listBox.Items.Clear();
+		try
+		{
+			List<string> remainingCountiesList = await _opisRepo.GetRemainingCountiesAsync();
+			foreach (var county in remainingCountiesList)
+			{
+				listBox.Items.Add(county);
+			}
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message);
+		}
+	}
+
+	public async Task PopulateBoxesCheckListbox( CheckedListBox checkedListBox, string county )
+	{
+		checkedListBox.Items.Clear();
+		try
+		{
+			List<int> boxesList = await _opisRepo.GetCountyRemainingBoxes(county);
+			foreach (var box in boxesList)
+			{
+				checkedListBox.Items.Add(box);
+			}
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message, ex.InnerException);
+		}
+	}
+
+	public static void PopulateListBoxDetails( ListBox listBox, List<DaysWithShifts> daysWithShifts )
+	{
+		listBox.Items.Clear();
+		foreach (var item in daysWithShifts)
+		{
+			listBox.Items.Add($"{item.Date} Total: {item.Shifts!.Sum(s => s.ShiftProduction)}");
+			foreach (var shift in item.Shifts!)
+			{
+				listBox.Items.Add($"       {shift.ShiftName}: {shift.ShiftProduction}");
+			}
+		}
+	}
+
+	public async Task UpdateProgressbarAsync( ProgressBar progressBar, Label label )
+	{
+		try
+		{
+			var totalInvoices = await _opisRepo.GetTotalInvoicesAsync();
+			var remainingInvoices = await _opisRepo.GetRemainingInvoicesAsync();
+			ProgressHelper.UpdateProgressbar(progressBar, totalInvoices - remainingInvoices, totalInvoices, label);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message, ex.InnerException);
+		}
 	}
 }
