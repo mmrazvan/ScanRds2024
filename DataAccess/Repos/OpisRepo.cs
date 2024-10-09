@@ -19,7 +19,12 @@ public class OpisRepo
 		return await _context.Opis.ToListAsync();
 	}
 
-	public async Task<Opis> GetOpisByIdAsync( int boxNumber )
+	public async Task<List<Opis>> GetAllOpisAsinc()
+	{
+		return await _context.Opis.ToListAsync();
+	}
+
+	public async Task<Opis?> GetOpisByIdAsync( int boxNumber )
 	{
 		return await _context.Opis.FirstOrDefaultAsync(o => o.NumarCutie == boxNumber);
 	}
