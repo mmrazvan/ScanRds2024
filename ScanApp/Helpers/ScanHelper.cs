@@ -201,8 +201,9 @@ public class ScanHelper
 				var dayWithShifts = new DaysWithShifts
 				{
 					Date = workingDay,
-					Shifts = await _opisRepo.GetShiftsAsync(workingDay)
+					Shifts = await _opisRepo.GetShiftsAsync(workingDay),
 				};
+				dayWithShifts.Speed = dayWithShifts.Shifts.Max(s => s.Speed);
 				daysWithShifts.Add(dayWithShifts);
 			}
 		}

@@ -181,7 +181,7 @@ partial class ScanForm
 		labelStatus.Name = "labelStatus";
 		labelStatus.Size = new Size(264, 343);
 		labelStatus.TabIndex = 1;
-		labelStatus.Text = "label1";
+		labelStatus.Text = "No errors";
 		// 
 		// listBoxDetails
 		// 

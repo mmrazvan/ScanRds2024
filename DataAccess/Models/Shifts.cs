@@ -17,6 +17,8 @@ public class Shifts
 	public DateOnly Date => DateOnly.FromDateTime(_date);
 	public double ShiftProduction { get; set; }
 
+	public double Speed { get; set; }
+
 	public string ShiftName
 	{
 		get

@@ -145,6 +145,8 @@ public class OpisRepo
 			List<Shifts> shifts = [];
 			List<Opis> opis = await _context.Opis.ToListAsync();
 			IEnumerable<Opis> opisFiltered = opis.Where(o => o.Data.HasValue && DateOnly.FromDateTime(o.Data.Value) == date);
+			var startScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Min();
+			var endScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Max();
 			foreach (Opis item in opisFiltered)
 			{
 				if (item.Data.HasValue)
@@ -167,6 +169,7 @@ public class OpisRepo
 					}
 				}
 			}
+			shifts[0].Speed = MethodHelpers.CalculateSpeed(startScan, endScan, shifts[0].ShiftProduction);
 			return shifts;
 		}
 		catch (Exception ex)

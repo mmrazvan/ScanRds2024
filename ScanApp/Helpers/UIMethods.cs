@@ -66,8 +66,9 @@ public class UIMethods
 			listBox.Items.Add($"{item.Date} Total: {item.Shifts!.Sum(s => s.ShiftProduction)}");
 			foreach (var shift in item.Shifts!)
 			{
-				listBox.Items.Add($"       {shift.ShiftName}: {shift.ShiftProduction}");
+				listBox.Items.Add($"|       {shift.ShiftName}: {shift.ShiftProduction}");
 			}
+			listBox.Items.Add($"Speed: {item.Speed:.0}");
 		}
 	}
 
