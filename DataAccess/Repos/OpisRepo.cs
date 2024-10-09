@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Helpers;
+using DataAccess.Models;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -32,9 +33,7 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw;
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -47,15 +46,11 @@ public class OpisRepo
 		}
 		catch (Microsoft.Data.SqlClient.SqlException ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw new Exception(ex.Message, ex);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw;
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -67,13 +62,11 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw;
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
-	public async Task<List<int>> GetCountyRemainingBoxes( string county )
+	public async Task<List<int>> GetCountyRemainingBoxesAsync( string county )
 	{
 		try
 		{
@@ -81,9 +74,7 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw new Exception(ex.Message, ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -95,15 +86,14 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw;
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
 	private async Task<bool> AllCountyBoxesMarked( string county )
 	{
-		return await _context.Opis.Where(h => h.Judet == county).Where(h => h.Term != "x").SumAsync(c => c.Cantitate) == 0;
+		var a = await _context.Opis.Where(h => h.Judet == county).Where(h => h.Term != "x").SumAsync(c => c.Cantitate);
+		return a == 0;
 	}
 
 	public async Task<List<string>> GetRemainingCountiesAsync()
@@ -116,18 +106,17 @@ public class OpisRepo
 				.Where(c => !c.All(h => h.Term != "x" && h.Masina != ""))
 				.Select(c => c.Key).Order()
 				.ToList();
-			foreach (var county in notCompletedCounties)
+			var a = new List<string>(notCompletedCounties);
+			foreach (string? county in notCompletedCounties)
 			{
 				if (await AllCountyBoxesMarked(county))
-					notCompletedCounties.Remove(county);
+					a.Remove(county);
 			}
-			return notCompletedCounties;
+			return a;
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw new Exception(ex.Message, ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -145,9 +134,7 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw new Exception(ex.Message, ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -184,9 +171,7 @@ public class OpisRepo
 		}
 		catch (Exception ex)
 		{
-			// Handle the exception here
-			// Log the error or perform any necessary actions
-			throw;
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 }

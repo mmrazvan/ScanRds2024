@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Helpers;
+using DataAccess.Models;
 using DataAccess.Repos;
 
 namespace ScanApp.Helpers;
@@ -36,7 +37,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -45,7 +46,7 @@ public class UIMethods
 		checkedListBox.Items.Clear();
 		try
 		{
-			List<int> boxesList = await _opisRepo.GetCountyRemainingBoxes(county);
+			List<int> boxesList = await _opisRepo.GetCountyRemainingBoxesAsync(county);
 			foreach (var box in boxesList)
 			{
 				checkedListBox.Items.Add(box);
@@ -53,7 +54,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message, ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
@@ -80,7 +81,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message, ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 }
