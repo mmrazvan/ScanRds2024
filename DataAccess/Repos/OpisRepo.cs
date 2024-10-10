@@ -143,6 +143,30 @@ public class OpisRepo
 		}
 	}
 
+	public async Task<int> GetTotalInvoicesByCountyAsync( string county )
+	{
+		try
+		{
+			return await _context.Opis.Where(c => c.Judet == county).SumAsync(c => c.Cantitate.HasValue ? ( int ) c.Cantitate.Value : 0);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+		}
+	}
+
+	public async Task<int> GetRemainingInvoicesByCountyAsync( string county )
+	{
+		try
+		{
+			return await _context.Opis.Where(c => c.Judet == county && c.Term != "x").SumAsync(c => c.Cantitate.HasValue ? ( int ) c.Cantitate.Value : 0);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+		}
+	}
+
 	public async Task<List<Shifts>> GetShiftsAsync( DateOnly date )
 	{
 		try

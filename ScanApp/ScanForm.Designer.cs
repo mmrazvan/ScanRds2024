@@ -38,6 +38,7 @@ partial class ScanForm
 		buttonSelectAll = new Button();
 		groupBox1 = new GroupBox();
 		groupBox2 = new GroupBox();
+		labelCountyDetails = new Label();
 		groupBox3 = new GroupBox();
 		labelStatus = new Label();
 		listBoxDetails = new ListBox();
@@ -107,7 +108,7 @@ partial class ScanForm
 		listBoxCounty.ItemHeight = 20;
 		listBoxCounty.Location = new Point(6, 18);
 		listBoxCounty.Name = "listBoxCounty";
-		listBoxCounty.Size = new Size(238, 364);
+		listBoxCounty.Size = new Size(238, 324);
 		listBoxCounty.TabIndex = 6;
 		listBoxCounty.SelectedValueChanged +=  ListBoxCounty_SelectedValueChanged ;
 		// 
@@ -118,15 +119,15 @@ partial class ScanForm
 		checkedListBox1.FormattingEnabled = true;
 		checkedListBox1.Location = new Point(250, 62);
 		checkedListBox1.Name = "checkedListBox1";
-		checkedListBox1.Size = new Size(120, 246);
+		checkedListBox1.Size = new Size(120, 290);
 		checkedListBox1.TabIndex = 7;
 		// 
 		// buttonSelectAll
 		// 
 		buttonSelectAll.Anchor =     AnchorStyles.Bottom  |  AnchorStyles.Right ;
-		buttonSelectAll.Location = new Point(250, 351);
+		buttonSelectAll.Location = new Point(250, 358);
 		buttonSelectAll.Name = "buttonSelectAll";
-		buttonSelectAll.Size = new Size(120, 45);
+		buttonSelectAll.Size = new Size(120, 38);
 		buttonSelectAll.TabIndex = 8;
 		buttonSelectAll.Text = "Select all";
 		buttonSelectAll.UseVisualStyleBackColor = true;
@@ -149,6 +150,7 @@ partial class ScanForm
 		// groupBox2
 		// 
 		groupBox2.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Right ;
+		groupBox2.Controls.Add(labelCountyDetails);
 		groupBox2.Controls.Add(listBoxCounty);
 		groupBox2.Controls.Add(button1);
 		groupBox2.Controls.Add(buttonSelectAll);
@@ -159,6 +161,17 @@ partial class ScanForm
 		groupBox2.TabIndex = 10;
 		groupBox2.TabStop = false;
 		groupBox2.Text = "Manual scan area";
+		// 
+		// labelCountyDetails
+		// 
+		labelCountyDetails.Anchor =      AnchorStyles.Bottom  |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		labelCountyDetails.BorderStyle = BorderStyle.Fixed3D;
+		labelCountyDetails.Location = new Point(6, 358);
+		labelCountyDetails.Name = "labelCountyDetails";
+		labelCountyDetails.Size = new Size(238, 35);
+		labelCountyDetails.TabIndex = 9;
+		labelCountyDetails.Text = "Select";
+		labelCountyDetails.TextAlign = ContentAlignment.MiddleLeft;
 		// 
 		// groupBox3
 		// 
@@ -241,4 +254,5 @@ partial class ScanForm
 	private Button button2;
 	private ListBox listBoxDetails;
 	private Label labelStatus;
+	private Label labelCountyDetails;
 }

@@ -85,4 +85,85 @@ public class UIMethods
 			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
+
+	public async Task UpdateLabelCountyDetailsAsync( Label label, string county )
+	{
+		try
+		{
+			int totalInvoices = await _opisRepo.GetTotalInvoicesByCountyAsync(county);
+			int remainingInvoices = await _opisRepo.GetRemainingInvoicesByCountyAsync(county);
+			var percentage = ( ( double ) ( totalInvoices - remainingInvoices ) / totalInvoices ) * 100;
+			label.Text = $"Total: {totalInvoices}; Remaining: {remainingInvoices};{Environment.NewLine}{percentage:.00}% completed";
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+		}
+	}
+
+	public async Task UpdateLabelRemainingTimeAsync( Label label )
+	{
+		try
+		{
+			DateTime finishDate = await CalculateFinishDate();
+			label.Text = $"Finish date: {finishDate}";
+		}
+		catch (Exception ex)
+		{
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+		}
+	}
+
+	public async Task<DateTime> CalculateFinishDate()
+	{
+		List<DaysWithShifts> daysWithShifts = await GetDaysWithShifts();
+		double averageSpeed = daysWithShifts.Average(d => d.Speed);
+		int remainingProduction = await _opisRepo.GetRemainingInvoicesAsync();
+		double totalRemainingHours = remainingProduction / averageSpeed;
+		DateTime finishDate = DateTime.Now;
+		DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+		while (totalRemainingHours > 0)
+		{
+			if (finishDate.DayOfWeek == DayOfWeek.Saturday || finishDate.DayOfWeek == DayOfWeek.Sunday)
+			{
+				finishDate = finishDate.AddDays(1);
+				date = date.AddDays(1);
+			}
+			else
+			{
+				var workinghoursToday = TimeHelpers.GetWorkingHoursRemainingToday(date);
+				var remainingHoursToday = totalRemainingHours > workinghoursToday
+					? TimeHelpers.GetRemainingHours(date)
+					: totalRemainingHours;
+				finishDate = finishDate.AddHours(remainingHoursToday);
+				totalRemainingHours -= workinghoursToday;
+				date = date.AddDays(1);
+			}
+		}
+		return finishDate;
+	}
+
+	public async Task<List<DaysWithShifts>> GetDaysWithShifts()
+	{
+		var daysWithShifts = new List<DaysWithShifts>();
+		try
+		{
+			var workingDays = _opisRepo.GetWorkingDaysAsync();
+			foreach (var workingDay in workingDays)
+			{
+				var dayWithShifts = new DaysWithShifts
+				{
+					Date = workingDay,
+					Shifts = await _opisRepo.GetShiftsAsync(workingDay),
+				};
+				dayWithShifts.Speed = dayWithShifts.Shifts.Max(s => s.Speed);
+				daysWithShifts.Add(dayWithShifts);
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Exception occurred during getting days with shifts: {ex.Message}");
+		}
+		return daysWithShifts;
+	}
 }

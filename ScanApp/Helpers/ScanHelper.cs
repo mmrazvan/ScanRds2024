@@ -189,28 +189,4 @@ public class ScanHelper
 			Console.WriteLine($"Exception occurred during regular scan processing: {ex.Message}");
 		}
 	}
-
-	public async Task<List<DaysWithShifts>> GetDaysWithShifts()
-	{
-		var daysWithShifts = new List<DaysWithShifts>();
-		try
-		{
-			var workingDays = _opisRepo.GetWorkingDaysAsync();
-			foreach (var workingDay in workingDays)
-			{
-				var dayWithShifts = new DaysWithShifts
-				{
-					Date = workingDay,
-					Shifts = await _opisRepo.GetShiftsAsync(workingDay),
-				};
-				dayWithShifts.Speed = dayWithShifts.Shifts.Max(s => s.Speed);
-				daysWithShifts.Add(dayWithShifts);
-			}
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine($"Exception occurred during getting days with shifts: {ex.Message}");
-		}
-		return daysWithShifts;
-	}
 }

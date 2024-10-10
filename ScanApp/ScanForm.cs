@@ -44,7 +44,7 @@ public partial class ScanForm : Form
 		{
 			labelStatus.Text = ex.Message;
 		}
-		UIMethods.PopulateListBoxDetails(listBoxDetails, await _scanHelper.GetDaysWithShifts());
+		UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
 		textBoxScan.Focus();
 	}
 
@@ -54,7 +54,8 @@ public partial class ScanForm : Form
 		{
 			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
 			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
-			UIMethods.PopulateListBoxDetails(listBoxDetails, await _scanHelper.GetDaysWithShifts());
+			UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
+			await _uiMethods.UpdateLabelRemainingTimeAsync(labelStatus);
 		}
 		catch (Exception ex)
 		{
@@ -95,6 +96,7 @@ public partial class ScanForm : Form
 			try
 			{
 				await _uiMethods.PopulateBoxesCheckListbox(checkedListBox1, listBoxCounty.SelectedItem.ToString());
+				await _uiMethods.UpdateLabelCountyDetailsAsync(labelCountyDetails, listBoxCounty.SelectedItem.ToString());
 			}
 			catch (Exception ex)
 			{
