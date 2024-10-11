@@ -166,44 +166,4 @@ public class OpisRepo
 			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
-
-	public async Task<List<Shifts>> GetShiftsAsync( DateOnly date )
-	{
-		try
-		{
-			List<Shifts> shifts = [];
-			List<Opis> opis = await _context.Opis.ToListAsync();
-			IEnumerable<Opis> opisFiltered = opis.Where(o => o.Data.HasValue && DateOnly.FromDateTime(o.Data.Value) == date);
-			var startScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Min();
-			var endScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Max();
-			foreach (Opis item in opisFiltered)
-			{
-				if (item.Data.HasValue)
-				{
-					Shifts shift = new Shifts(item.Data.Value)
-					{
-						ShiftProduction = item.Cantitate ?? 0
-					};
-					if (!shifts.Any(c => c.Date == shift.Date))
-						shifts.Add(shift);
-					else
-					{
-						if (!shifts.Any(s => s.ShiftName == shift.ShiftName))
-							shifts.Add(shift);
-						else
-						{
-							Shifts existingShift = shifts.First(s => s.Date == shift.Date && s.ShiftName == shift.ShiftName);
-							existingShift.ShiftProduction += shift.ShiftProduction;
-						}
-					}
-				}
-			}
-			shifts[0].Speed = MethodHelpers.CalculateSpeed(startScan, endScan, shifts[0].ShiftProduction);
-			return shifts;
-		}
-		catch (Exception ex)
-		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
-		}
-	}
 }
