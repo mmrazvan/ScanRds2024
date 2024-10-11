@@ -192,7 +192,7 @@ public class OpisRepo
 							shifts.Add(shift);
 						else
 						{
-							var existingShift = shifts.First(s => s.Date == shift.Date && s.ShiftName == shift.ShiftName);
+							Shifts existingShift = shifts.First(s => s.Date == shift.Date && s.ShiftName == shift.ShiftName);
 							existingShift.ShiftProduction += shift.ShiftProduction;
 						}
 					}

@@ -12,6 +12,6 @@ public class MethodHelpers
 	public static double CalculateSpeed( TimeSpan startScan, TimeSpan endScan, double production )
 	{
 		var hours = ( endScan - startScan ).TotalHours;
-		return production / hours;
+		return hours == 0 ? 0 : production / hours;
 	}
 }

@@ -19,7 +19,7 @@ public class UIMethods
 	{
 		ScanHelper scanHelper = new ScanHelper(_opisRepo, _headerRepo);
 		string text = scanText.ToUpper();
-		var a = ScanHelper.CodeVerification(text);
+		var a = StringHelpers.CodeVerification(text);
 		if (a is not null)
 			await scanHelper.ProcessCodeData(a);
 	}
@@ -106,7 +106,7 @@ public class UIMethods
 		try
 		{
 			DateTime finishDate = await CalculateFinishDate();
-			label.Text = $"Finish date: {finishDate}";
+			label.Text = $"Finish date: {finishDate.DayOfWeek} {finishDate:dd.MM HH:mm}";
 		}
 		catch (Exception ex)
 		{
@@ -162,7 +162,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine($"Exception occurred during getting days with shifts: {ex.Message}");
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 		return daysWithShifts;
 	}
