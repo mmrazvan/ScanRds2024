@@ -9,17 +9,17 @@ namespace ScanApp;
 public partial class ScanForm : Form
 {
 	private readonly RDSContext _context;
-	private readonly OpisRepo _opisRepo;
-	private readonly HeaderRepo _headerRepo;
+	private readonly IOpisRepo _opisRepo;
+	private readonly IHeaderRepo _headerRepo;
 	private string _workFolder = string.Empty;
 	private readonly UIMethods _uiMethods;
 	private readonly ScanHelper _scanHelper;
 
-	public ScanForm( RDSContext context )
+	public ScanForm( RDSContext context, IOpisRepo opisRepo )
 	{
 		InitializeComponent();
 		_context = context;
-		_opisRepo = new OpisRepo(_context);
+		_opisRepo = opisRepo;
 		_headerRepo = new HeaderRepo(_context);
 		_workFolder = Settings.Default.WorkFolder;
 		_uiMethods = new UIMethods(_opisRepo, _headerRepo);
@@ -38,7 +38,7 @@ public partial class ScanForm : Form
 		checkedListBox1.Items.Clear();
 		try
 		{
-			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
+			UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
 		}
 		catch (Exception ex)
 		{
@@ -53,7 +53,7 @@ public partial class ScanForm : Form
 		try
 		{
 			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
-			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
+			UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
 			UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
 			await _uiMethods.UpdateLabelRemainingTimeAsync(labelStatus);
 		}
@@ -83,7 +83,7 @@ public partial class ScanForm : Form
 		{
 			await _uiMethods.ProcessScan(textBoxScan.Text);
 			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
-			await _uiMethods.PopulateRemainingCountyList(listBoxCounty);
+			UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
 			textBoxScan.Clear();
 			textBoxScan.Focus();
 		}

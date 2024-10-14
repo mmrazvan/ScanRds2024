@@ -6,10 +6,10 @@ namespace ScanApp.Helpers;
 
 public class UIMethods
 {
-	private readonly OpisRepo _opisRepo;
-	private readonly HeaderRepo _headerRepo;
+	private readonly IOpisRepo _opisRepo;
+	private readonly IHeaderRepo _headerRepo;
 
-	public UIMethods( OpisRepo opisRepo, HeaderRepo headerRepo )
+	public UIMethods( IOpisRepo opisRepo, IHeaderRepo headerRepo )
 	{
 		_opisRepo = opisRepo;
 		_headerRepo = headerRepo;
@@ -24,12 +24,28 @@ public class UIMethods
 			await scanHelper.ProcessCodeData(a);
 	}
 
-	public async Task PopulateRemainingCountyList( ListBox listBox )
+	//public async Task PopulateRemainingCountyList( ListBox listBox )
+	//{
+	//	listBox.Items.Clear();
+	//	try
+	//	{
+	//		List<string> remainingCountiesList = await _opisRepo.GetRemainingCountiesAsync();
+	//		foreach (var county in remainingCountiesList)
+	//		{
+	//			listBox.Items.Add(county);
+	//		}
+	//	}
+	//	catch (Exception ex)
+	//	{
+	//		throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+	//	}
+	//}
+
+	public static void PopulateRemainingCountyList( ListBox listBox, List<string> remainingCountiesList )
 	{
 		listBox.Items.Clear();
 		try
 		{
-			List<string> remainingCountiesList = await _opisRepo.GetRemainingCountiesAsync();
 			foreach (var county in remainingCountiesList)
 			{
 				listBox.Items.Add(county);
@@ -37,7 +53,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -54,7 +70,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -82,7 +98,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -97,7 +113,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -110,7 +126,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -162,7 +178,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 		return daysWithShifts;
 	}

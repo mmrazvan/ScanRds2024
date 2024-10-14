@@ -4,12 +4,12 @@ using DataAccess.Repos;
 
 namespace ScanApp.Helpers;
 
-public class ScanHelper
+public class ScanHelper : IScanHelper
 {
-	private readonly OpisRepo _opisRepo;
-	private readonly HeaderRepo _headerRepo;
+	private readonly IOpisRepo _opisRepo;
+	private readonly IHeaderRepo _headerRepo;
 
-	public ScanHelper( OpisRepo opisRepo, HeaderRepo headerRepo )
+	public ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo )
 	{
 		_opisRepo = opisRepo;
 		_headerRepo = headerRepo;
@@ -150,12 +150,18 @@ public class ScanHelper
 					}
 				}
 			}
-			shifts[0].Speed = MethodHelpers.CalculateSpeed(startScan, endScan, shifts[0].ShiftProduction);
+			shifts[0].Speed = CalculateSpeed(startScan, endScan, shifts[0].ShiftProduction);
 			return shifts;
 		}
 		catch (Exception ex)
 		{
 			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
+	}
+
+	private static double CalculateSpeed( TimeSpan startScan, TimeSpan endScan, double production )
+	{
+		var hours = ( endScan - startScan ).TotalHours;
+		return hours == 0 ? 0 : production / hours;
 	}
 }

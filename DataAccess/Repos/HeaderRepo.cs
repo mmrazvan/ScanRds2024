@@ -3,7 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repos;
-public class HeaderRepo
+
+public class HeaderRepo : IHeaderRepo
 {
 	private readonly RDSContext _context;
 

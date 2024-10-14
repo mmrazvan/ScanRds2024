@@ -1,6 +1,7 @@
 using System.Configuration;
 
 using DataAccess.Models;
+using DataAccess.Repos;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ internal static class Program
 	///  The main entry point for the application.
 	/// </summary>
 	[STAThread]
-	static void Main()
+	private static void Main()
 	{
 		// To customize application configuration such as set high DPI settings or default font,
 		// see https://aka.ms/applicationconfiguration.
@@ -21,7 +22,8 @@ internal static class Program
 		var options = new DbContextOptionsBuilder<RDSContext>()
 			 .UseSqlServer(connectionString)
 			 .Options;
-		using var context = new RDSContext(options);
-		Application.Run(new ScanForm(context));
+		using RDSContext context = new RDSContext(options);
+		IOpisRepo opisRepo = new OpisRepo(context);
+		Application.Run(new ScanForm(context, opisRepo));
 	}
 }
