@@ -63,7 +63,7 @@ partial class ScanForm
 		// 
 		textBoxScan.Anchor = AnchorStyles.Top;
 		textBoxScan.Font = new Font("Segoe UI", 18F);
-		textBoxScan.Location = new Point(344, 22);
+		textBoxScan.Location = new Point(346, 22);
 		textBoxScan.MinimumSize = new Size(286, 39);
 		textBoxScan.Name = "textBoxScan";
 		textBoxScan.Size = new Size(286, 39);
@@ -75,7 +75,7 @@ partial class ScanForm
 		progressBarScan.Anchor =      AnchorStyles.Top  |  AnchorStyles.Left   |  AnchorStyles.Right ;
 		progressBarScan.Location = new Point(6, 67);
 		progressBarScan.Name = "progressBarScan";
-		progressBarScan.Size = new Size(937, 36);
+		progressBarScan.Size = new Size(942, 36);
 		progressBarScan.TabIndex = 2;
 		// 
 		// labelProgress
@@ -84,7 +84,7 @@ partial class ScanForm
 		labelProgress.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
 		labelProgress.Location = new Point(6, 106);
 		labelProgress.Name = "labelProgress";
-		labelProgress.Size = new Size(937, 27);
+		labelProgress.Size = new Size(942, 27);
 		labelProgress.TabIndex = 3;
 		labelProgress.Text = "label1";
 		labelProgress.TextAlign = ContentAlignment.MiddleCenter;
@@ -142,7 +142,7 @@ partial class ScanForm
 		groupBox1.Location = new Point(12, 12);
 		groupBox1.MinimumSize = new Size(300, 118);
 		groupBox1.Name = "groupBox1";
-		groupBox1.Size = new Size(950, 136);
+		groupBox1.Size = new Size(955, 136);
 		groupBox1.TabIndex = 9;
 		groupBox1.TabStop = false;
 		groupBox1.Text = "Scan area";
@@ -155,7 +155,7 @@ partial class ScanForm
 		groupBox2.Controls.Add(button1);
 		groupBox2.Controls.Add(buttonSelectAll);
 		groupBox2.Controls.Add(checkedListBox1);
-		groupBox2.Location = new Point(586, 154);
+		groupBox2.Location = new Point(591, 154);
 		groupBox2.Name = "groupBox2";
 		groupBox2.Size = new Size(376, 402);
 		groupBox2.TabIndex = 10;
@@ -180,7 +180,7 @@ partial class ScanForm
 		groupBox3.Controls.Add(listBoxDetails);
 		groupBox3.Location = new Point(12, 154);
 		groupBox3.Name = "groupBox3";
-		groupBox3.Size = new Size(568, 372);
+		groupBox3.Size = new Size(573, 372);
 		groupBox3.TabIndex = 11;
 		groupBox3.TabStop = false;
 		groupBox3.Text = "Statistics area";
@@ -192,19 +192,19 @@ partial class ScanForm
 		labelStatus.Font = new Font("Segoe UI", 10F);
 		labelStatus.Location = new Point(298, 19);
 		labelStatus.Name = "labelStatus";
-		labelStatus.Size = new Size(264, 343);
+		labelStatus.Size = new Size(269, 343);
 		labelStatus.TabIndex = 1;
 		labelStatus.Text = "No errors";
 		// 
 		// listBoxDetails
 		// 
-		listBoxDetails.Anchor =       AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		listBoxDetails.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Left ;
 		listBoxDetails.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
 		listBoxDetails.FormattingEnabled = true;
 		listBoxDetails.ItemHeight = 20;
 		listBoxDetails.Location = new Point(6, 18);
 		listBoxDetails.Name = "listBoxDetails";
-		listBoxDetails.Size = new Size(286, 344);
+		listBoxDetails.Size = new Size(291, 344);
 		listBoxDetails.TabIndex = 0;
 		// 
 		// button2
@@ -222,7 +222,7 @@ partial class ScanForm
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
 		AutoScaleMode = AutoScaleMode.Font;
-		ClientSize = new Size(974, 568);
+		ClientSize = new Size(979, 568);
 		Controls.Add(button2);
 		Controls.Add(groupBox3);
 		Controls.Add(groupBox2);

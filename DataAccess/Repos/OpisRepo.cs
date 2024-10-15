@@ -98,4 +98,10 @@ public class OpisRepo : IOpisRepo
 	{
 		return await _context.Opis.Where(c => c.Judet == county && c.Term != "x").SumAsync(c => c.Cantitate.HasValue ? ( int ) c.Cantitate.Value : 0);
 	}
+
+	public Task<DateTime> GetLastOpisDateAsync()
+	{
+		var lastOpis = _context.Opis.OrderByDescending(o => o.Data).FirstOrDefault();
+		return Task.FromResult(lastOpis?.Data ?? DateTime.Now);
+	}
 }

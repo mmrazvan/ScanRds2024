@@ -7,6 +7,7 @@ public interface IOpisRepo
 	Task<List<Opis>> GetAllOpisAsinc();
 	Task<List<string>> GetCountiesAsync();
 	Task<List<int>> GetCountyRemainingBoxesAsync( string county );
+	Task<DateTime> GetLastOpisDateAsync();
 	Task<List<Opis>> GetOpisAsync();
 	Task<Opis?> GetOpisByIdAsync( int boxNumber );
 	Task<List<string>> GetRemainingCountiesAsync();

@@ -118,8 +118,13 @@ public class UIMethods
 		List<DaysWithShifts> daysWithShifts = await GetDaysWithShifts();
 		double averageSpeed = daysWithShifts.Average(d => d.Speed);
 		int remainingProduction = await _opisRepo.GetRemainingInvoicesAsync();
+		if (remainingProduction == 0)
+		{
+			return await _opisRepo.GetLastOpisDateAsync();
+		}
 		double totalRemainingHours = remainingProduction / averageSpeed;
 		DateTime finishDate = DateTime.Now;
+
 		DateOnly date = DateOnly.FromDateTime(DateTime.Now);
 		while (totalRemainingHours > 0)
 		{
