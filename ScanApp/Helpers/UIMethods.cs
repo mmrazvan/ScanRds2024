@@ -24,23 +24,6 @@ public class UIMethods
 			await scanHelper.ProcessCodeData(a);
 	}
 
-	//public async Task PopulateRemainingCountyList( ListBox listBox )
-	//{
-	//	listBox.Items.Clear();
-	//	try
-	//	{
-	//		List<string> remainingCountiesList = await _opisRepo.GetRemainingCountiesAsync();
-	//		foreach (var county in remainingCountiesList)
-	//		{
-	//			listBox.Items.Add(county);
-	//		}
-	//	}
-	//	catch (Exception ex)
-	//	{
-	//		throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
-	//	}
-	//}
-
 	public static void PopulateRemainingCountyList( ListBox listBox, List<string> remainingCountiesList )
 	{
 		listBox.Items.Clear();
