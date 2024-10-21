@@ -11,9 +11,8 @@ public partial class ScanForm : Form
 	private readonly RDSContext _context;
 	private readonly IOpisRepo _opisRepo;
 	private readonly IHeaderRepo _headerRepo;
-	private string _workFolder = string.Empty;
+	private string _workFolder;
 	private readonly UIMethods _uiMethods;
-	private readonly ScanHelper _scanHelper;
 
 	public ScanForm( RDSContext context, IOpisRepo opisRepo )
 	{
@@ -23,7 +22,6 @@ public partial class ScanForm : Form
 		_headerRepo = new HeaderRepo(_context);
 		_workFolder = Settings.Default.WorkFolder;
 		_uiMethods = new UIMethods(_opisRepo, _headerRepo);
-		_scanHelper = new ScanHelper(_opisRepo, _headerRepo);
 	}
 
 	private async void Button1_Click( object sender, EventArgs e )
@@ -31,7 +29,7 @@ public partial class ScanForm : Form
 		foreach (var item in checkedListBox1.CheckedItems)
 		{
 			var opis = await _opisRepo.GetOpisByIdAsync(( int ) item);
-			opis.Term = "x";
+			opis!.Term = "x";
 			opis.Data = DateTime.Now;
 			await _opisRepo.UpdateOpisAsync(opis);
 		}
@@ -95,8 +93,8 @@ public partial class ScanForm : Form
 		{
 			try
 			{
-				await _uiMethods.PopulateBoxesCheckListbox(checkedListBox1, listBoxCounty.SelectedItem.ToString());
-				await _uiMethods.UpdateLabelCountyDetailsAsync(labelCountyDetails, listBoxCounty.SelectedItem.ToString());
+				await _uiMethods.PopulateBoxesCheckListbox(checkedListBox1, listBoxCounty.SelectedItem.ToString()!);
+				await _uiMethods.UpdateLabelCountyDetailsAsync(labelCountyDetails, listBoxCounty.SelectedItem.ToString()!);
 			}
 			catch (Exception ex)
 			{
