@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repos;
 
-public class OpisRepo : IOpisRepo
+public class OpisRepo( RDSContext context ) : IOpisRepo
 {
-	private readonly RDSContext _context;
-
-	public OpisRepo( RDSContext context )
-	{
-		_context = context;
-	}
+	private readonly RDSContext _context = context;
 
 	public async Task<List<Opis>> GetOpisAsync()
 	{
@@ -58,7 +53,7 @@ public class OpisRepo : IOpisRepo
 	private async Task<bool> AllCountyBoxesMarked( string county )
 	{
 		var a = await _context.Opis.Where(h => h.Judet == county).Where(h => h.Term != "x").SumAsync(c => c.Cantitate);
-		return a == 0;
+		return Math.Abs(a ?? 0) < 0.0001;
 	}
 
 	public async Task<List<string>> GetRemainingCountiesAsync()
@@ -80,12 +75,12 @@ public class OpisRepo : IOpisRepo
 
 	public List<DateOnly> GetWorkingDaysAsync()
 	{
-		var workingDays = _context.Opis.ToList()
-			.Select(o => o.Data)
-			.Where(o => o.HasValue)
-			.Select(data => DateOnly.FromDateTime(data.Value)).OrderDescending().ToList();
+		var workingDays = _context.Opis.AsEnumerable()
+			 .Select(o => o.Data)
+			 .Where(o => o.HasValue)
+			 .Select(data => data.HasValue ? DateOnly.FromDateTime(data.Value) : default).OrderDescending().ToList();
 		var a = workingDays
-			.Distinct().ToList();
+			 .Distinct().ToList();
 		return a;
 	}
 

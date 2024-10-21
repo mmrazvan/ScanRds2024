@@ -4,16 +4,10 @@ using DataAccess.Repos;
 
 namespace ScanApp.Helpers;
 
-public class ScanHelper : IScanHelper
+public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHelper
 {
-	private readonly IOpisRepo _opisRepo;
-	private readonly IHeaderRepo _headerRepo;
-
-	public ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo )
-	{
-		_opisRepo = opisRepo;
-		_headerRepo = headerRepo;
-	}
+	private readonly IOpisRepo _opisRepo = opisRepo;
+	private readonly IHeaderRepo _headerRepo = headerRepo;
 
 	public async Task ProcessCodeData( CodeData codeData )
 	{
@@ -43,6 +37,7 @@ public class ScanHelper : IScanHelper
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Exception occurred during code data processing: {ex.Message}");
+			throw;
 		}
 	}
 
@@ -126,8 +121,8 @@ public class ScanHelper : IScanHelper
 		{
 			List<Shifts> shifts = [];
 			IEnumerable<Opis> opisFiltered = opis.Where(o => o.Data.HasValue && DateOnly.FromDateTime(o.Data.Value) == date);
-			var startScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Min();
-			var endScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data.Value.TimeOfDay).Max();
+			TimeSpan startScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data!.Value.TimeOfDay).Min();
+			TimeSpan endScan = opisFiltered.Where(c => c.Data.HasValue).Select(c => c.Data!.Value.TimeOfDay).Max();
 			foreach (Opis item in opisFiltered)
 			{
 				if (item.Data.HasValue)
@@ -136,11 +131,11 @@ public class ScanHelper : IScanHelper
 					{
 						ShiftProduction = item.Cantitate ?? 0
 					};
-					if (!shifts.Any(c => c.Date == shift.Date))
+					if (!shifts.Exists(c => c.Date == shift.Date))
 						shifts.Add(shift);
 					else
 					{
-						if (!shifts.Any(s => s.ShiftName == shift.ShiftName))
+						if (!shifts.Exists(s => s.ShiftName == shift.ShiftName))
 							shifts.Add(shift);
 						else
 						{
@@ -155,13 +150,14 @@ public class ScanHelper : IScanHelper
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex.InnerException);
 		}
 	}
 
 	private static double CalculateSpeed( TimeSpan startScan, TimeSpan endScan, double production )
 	{
+		const double epsilon = 1e-10;
 		var hours = ( endScan - startScan ).TotalHours;
-		return hours == 0 ? 0 : production / hours;
+		return Math.Abs(hours) < epsilon ? 0 : production / hours;
 	}
 }

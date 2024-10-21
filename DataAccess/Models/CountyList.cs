@@ -2,6 +2,6 @@
 
 public class CountyList
 {
-	public string CountyName { get; set; }
-	public List<int> RemainingBoxes { get; set; }
+	public string? CountyName { get; set; }
+	public List<int>? RemainingBoxes { get; set; }
 }

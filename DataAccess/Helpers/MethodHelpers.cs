@@ -2,9 +2,9 @@
 
 namespace DataAccess.Helpers;
 
-public class MethodHelpers
+public static class MethodHelpers
 {
-	public static string GetCallerName( [CallerMemberName] string caller = null )
+	public static string GetCallerName( [CallerMemberName] string? caller = null )
 	{
 		return " in method: " + caller;
 	}
