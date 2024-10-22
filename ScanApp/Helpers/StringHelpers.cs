@@ -2,7 +2,7 @@
 
 namespace ScanApp.Helpers;
 
-public class StringHelpers
+public static class StringHelpers
 {
 	public static CodeData? CodeVerification( string code )
 	{
@@ -16,7 +16,7 @@ public class StringHelpers
 			switch (code.Substring(0, 1))
 			{
 				case "I": //regular scan
-					if (code.Length > 4 & code.Length <= 8)
+					if (code.Length > 4 && code.Length <= 8)
 					{
 						if (!MachineIds.MachineId.Contains(GetMachineId(code)))
 						{
@@ -36,10 +36,10 @@ public class StringHelpers
 
 				case "R":
 				{
-					if (code.Contains("-"))
+					if (code.Contains('-'))
 					{
-						codeData.IdPlic = int.Parse(code.Substring(1, code.IndexOf("-") - 1));
-						codeData.IdPlicStop = int.Parse(code.Substring(code.IndexOf("-") + 1));
+						codeData.IdPlic = int.Parse(code.Substring(1, code.IndexOf('-') - 1));
+						codeData.IdPlicStop = int.Parse(code.Substring(code.IndexOf('-') + 1));
 						return codeData;
 					}
 					codeData.IdPlic = int.Parse(code.Substring(1));

@@ -58,6 +58,7 @@ public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHel
 		catch (Exception ex)
 		{
 			Console.WriteLine($"Exception occurred during ID scan processing: {ex.Message}");
+			throw;
 		}
 	}
 

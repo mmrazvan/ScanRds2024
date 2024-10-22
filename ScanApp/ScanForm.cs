@@ -105,6 +105,9 @@ public partial class ScanForm : Form
 
 	private async void Button2_Click( object sender, EventArgs e )
 	{
+		// This method is intentionally left empty.
+		// Future implementation can be added here if needed.
+		await Task.CompletedTask;
 	}
 
 	private void ButtonSelectAll_Click( object sender, EventArgs e )
