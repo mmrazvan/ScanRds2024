@@ -1,6 +1,6 @@
 ﻿namespace ScanApp.Helpers;
 
-public class ProgressHelper
+public static class ProgressHelper
 {
 	public static void UpdateProgressbar( ProgressBar p, int value, int max )
 	{
@@ -17,6 +17,6 @@ public class ProgressHelper
 
 	private static string CalculatePercentage( int value, int max )
 	{
-		return $"{( ( double ) value / max * 100 ).ToString("0.00")}%";
+		return $"{( double ) value / max * 100:0.00}%";
 	}
 }

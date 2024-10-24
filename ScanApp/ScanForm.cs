@@ -117,4 +117,18 @@ public partial class ScanForm : Form
 			checkedListBox1.SetItemChecked(i, true);
 		}
 	}
+
+	private async void TextBoxScan_Leave( object sender, EventArgs e )
+	{
+		labelActions.ForeColor = Color.Red;
+		labelActions.Text = "Wait!";
+		await Task.Delay(TimeSpan.FromMinutes(1));
+		textBoxScan.Focus();
+	}
+
+	private void TextBoxScan_Enter( object sender, EventArgs e )
+	{
+		labelActions.ForeColor = Color.Green;
+		labelActions.Text = "Scan";
+	}
 }

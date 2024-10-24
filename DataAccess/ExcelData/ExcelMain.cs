@@ -4,7 +4,7 @@ using MiniExcelLibs;
 
 namespace DataAccess.ExcelData;
 
-public class ExcelMain
+public static class ExcelMain
 {
 	public static async Task WriteExcelAsync( string path, List<Opis> opis )
 	{

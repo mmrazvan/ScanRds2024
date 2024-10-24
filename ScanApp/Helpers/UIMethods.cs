@@ -36,7 +36,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -53,7 +53,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -109,7 +109,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -166,7 +166,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 		return daysWithShifts;
 	}

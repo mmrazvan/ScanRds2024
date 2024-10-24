@@ -43,6 +43,7 @@ partial class ScanForm
 		labelStatus = new Label();
 		listBoxDetails = new ListBox();
 		button2 = new Button();
+		labelActions = new Label();
 		groupBox1.SuspendLayout();
 		groupBox2.SuspendLayout();
 		groupBox3.SuspendLayout();
@@ -68,7 +69,9 @@ partial class ScanForm
 		textBoxScan.Name = "textBoxScan";
 		textBoxScan.Size = new Size(286, 39);
 		textBoxScan.TabIndex = 1;
+		textBoxScan.Enter +=  TextBoxScan_Enter ;
 		textBoxScan.KeyDown +=  TextBoxScan_KeyDown ;
+		textBoxScan.Leave +=  TextBoxScan_Leave ;
 		// 
 		// progressBarScan
 		// 
@@ -136,6 +139,7 @@ partial class ScanForm
 		// groupBox1
 		// 
 		groupBox1.Anchor =      AnchorStyles.Top  |  AnchorStyles.Left   |  AnchorStyles.Right ;
+		groupBox1.Controls.Add(labelActions);
 		groupBox1.Controls.Add(textBoxScan);
 		groupBox1.Controls.Add(progressBarScan);
 		groupBox1.Controls.Add(labelProgress);
@@ -218,6 +222,17 @@ partial class ScanForm
 		button2.UseVisualStyleBackColor = true;
 		button2.Click +=  Button2_Click ;
 		// 
+		// labelActions
+		// 
+		labelActions.BorderStyle = BorderStyle.Fixed3D;
+		labelActions.Font = new Font("Segoe UI", 25F, FontStyle.Regular, GraphicsUnit.Pixel);
+		labelActions.Location = new Point(6, 22);
+		labelActions.Name = "labelActions";
+		labelActions.Size = new Size(334, 39);
+		labelActions.TabIndex = 4;
+		labelActions.Text = "Status";
+		labelActions.TextAlign = ContentAlignment.MiddleCenter;
+		// 
 		// ScanForm
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
@@ -255,4 +270,5 @@ partial class ScanForm
 	private ListBox listBoxDetails;
 	private Label labelStatus;
 	private Label labelCountyDetails;
+	private Label labelActions;
 }

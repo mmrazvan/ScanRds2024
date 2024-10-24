@@ -1,12 +1,17 @@
 ﻿namespace ScanApp.Helpers;
 
-public class TimeHelpers
+public static class TimeHelpers
 {
 	public static double GetWorkingHoursRemainingToday( DateOnly date )
 	{
-		return date == DateOnly.FromDateTime(DateTime.Now)
-			? 22 - DateTime.Now.Hour
-			: date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday ? 0 : 16;
+		if (date == DateOnly.FromDateTime(DateTime.Now))
+		{
+			return 22 - DateTime.Now.Hour;
+		}
+		else
+		{
+			return date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday ? 0 : 16;
+		}
 	}
 
 	public static double GetRemainingHours( DateOnly date )

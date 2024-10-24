@@ -1,12 +1,12 @@
 ﻿namespace ScanApp.Helpers;
 
-public class FileHelpers
+public static class FileHelpers
 {
 	public static void CreateFile( string folder, decimal? id )
 	{
 		if (id is null)
 			return;
-		string fileName = folder + "\\" + id + ".RP";
+		string fileName = $"{folder}\\{id}.RP";
 		if (!File.Exists(fileName))
 		{
 			File.Create(fileName).Close();
