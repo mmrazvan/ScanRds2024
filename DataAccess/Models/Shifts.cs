@@ -24,10 +24,18 @@ public class Shifts
 		get
 		{
 			TimeOnly currentTime = TimeOnly.FromDateTime(_date);
-			return currentTime >= _startMorningShift && currentTime < _endMorningShift
-				? "Shift 1"
-				: currentTime >= _startAfternoonShift && currentTime < _endAfternoonShift
-				? "Shift 2" : "Shift 3";
+			if (currentTime >= _startMorningShift && currentTime < _endMorningShift)
+			{
+				return "Shift 1";
+			}
+			else if (currentTime >= _startAfternoonShift && currentTime < _endAfternoonShift)
+			{
+				return "Shift 2";
+			}
+			else
+			{
+				return "Shift 3";
+			}
 		}
 	}
 }

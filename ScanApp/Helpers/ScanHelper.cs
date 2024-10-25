@@ -41,7 +41,7 @@ public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHel
 		}
 	}
 
-	private async Task ProcessIdScan( CodeData codeData )
+	public async Task ProcessIdScan( CodeData codeData )
 	{
 		try
 		{
@@ -62,7 +62,7 @@ public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHel
 		}
 	}
 
-	private async Task ProcessClientCodeScan( CodeData codeData )
+	public async Task ProcessClientCodeScan( CodeData codeData )
 	{
 		try
 		{
@@ -79,7 +79,7 @@ public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHel
 		}
 	}
 
-	private async Task ProcessBarcodeScan( CodeData codeData )
+	public async Task ProcessBarcodeScan( CodeData codeData )
 	{
 		try
 		{
@@ -96,7 +96,7 @@ public class ScanHelper( IOpisRepo opisRepo, IHeaderRepo headerRepo ) : IScanHel
 		}
 	}
 
-	private async Task ProcessRegularScan( CodeData codeData )
+	public async Task ProcessRegularScan( CodeData codeData )
 	{
 		try
 		{
