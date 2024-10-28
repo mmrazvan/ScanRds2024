@@ -158,7 +158,7 @@ public class UIMethods
 				var dayWithShifts = new DaysWithShifts
 				{
 					Date = workingDay,
-					Shifts = ScanHelper.GetShifts(workingDay, await _opisRepo.GetAllOpisAsinc()),
+					Shifts = ShiftHelpers.GetShifts(workingDay, await _opisRepo.GetAllOpisAsinc()),
 				};
 				dayWithShifts.Speed = dayWithShifts.Shifts.Max(s => s.Speed);
 				daysWithShifts.Add(dayWithShifts);
