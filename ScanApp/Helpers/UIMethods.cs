@@ -1,5 +1,5 @@
 ﻿using DataAccess.Helpers;
-using DataAccess.Models;
+using DataAccess.Models.Shifts;
 using DataAccess.Repos;
 
 namespace ScanApp.Helpers;

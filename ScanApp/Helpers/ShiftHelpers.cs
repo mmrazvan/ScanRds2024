@@ -1,5 +1,6 @@
 ﻿using DataAccess.Helpers;
 using DataAccess.Models;
+using DataAccess.Models.Shifts;
 
 namespace ScanApp.Helpers;
 
@@ -17,7 +18,7 @@ public static class ShiftHelpers
 			{
 				if (item.Data.HasValue)
 				{
-					Shifts shift = new Shifts(item.Data.Value)
+					Shifts shift = new Shifts(item.Data.Value, new ShiftStrategy())
 					{
 						ShiftProduction = item.Cantitate ?? 0
 					};
