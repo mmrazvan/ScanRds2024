@@ -2,6 +2,9 @@
 using DataAccess.Models.Shifts;
 using DataAccess.Repos;
 
+using ScanApp.Helpers.Scan;
+using ScanApp.Helpers.Scan.ScanProcessors;
+
 namespace ScanApp.Helpers;
 
 public class UIMethods
@@ -17,7 +20,14 @@ public class UIMethods
 
 	public async Task ProcessScan( string scanText )
 	{
-		ScanHelper scanHelper = new ScanHelper(_opisRepo, _headerRepo);
+		var processors = new List<IScanProcessor>
+		{
+			new ClientCodeScanProcessor(_headerRepo),
+			new BarcodeScanProcessor(_headerRepo),
+			new RegularScanProcessor(_opisRepo),
+			new IDScanProcessor(_headerRepo)
+		};
+		ScanHelper scanHelper = new ScanHelper(processors);
 		string text = scanText.ToUpper();
 		var a = StringHelpers.CodeVerification(text);
 		if (a is not null)
@@ -36,7 +46,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -53,7 +63,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -81,7 +91,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -96,7 +106,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -109,7 +119,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 	}
 
@@ -166,7 +176,7 @@ public class UIMethods
 		}
 		catch (Exception ex)
 		{
-			throw new ApplicationException(ex.Message + MethodHelpers.GetCallerName(), ex);
+			throw new InvalidOperationException(ex.Message + MethodHelpers.GetCallerName(), ex);
 		}
 		return daysWithShifts;
 	}

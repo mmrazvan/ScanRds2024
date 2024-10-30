@@ -1,6 +1,6 @@
 ﻿namespace ScanApp.Helpers;
 
-public static class FileHelpers
+public class FileHelpers : IFileHelpers
 {
 	public static void CreateFile( string folder, decimal? id )
 	{
