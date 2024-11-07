@@ -29,7 +29,7 @@ public class UIMethods
 		};
 		ScanHelper scanHelper = new ScanHelper(processors);
 		string text = scanText.ToUpper();
-		var a = StringHelpers.CodeVerification(text);
+		DataAccess.Models.CodeData? a = StringHelpers.CodeVerification(text);
 		if (a is not null)
 			await scanHelper.ProcessCodeData(a);
 	}

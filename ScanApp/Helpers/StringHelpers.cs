@@ -24,6 +24,7 @@ public static class StringHelpers
 						}
 						codeData.MachineId = GetMachineId(code);
 						codeData.Cutie = GetBoxNumber(code);
+						codeData.Data = DateTime.Now;
 						return codeData;
 					}
 					else if (code.Length > 25)
