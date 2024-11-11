@@ -79,12 +79,19 @@ public partial class ScanForm : Form
 	{
 		if (e.KeyCode == Keys.Enter)
 		{
-			await _uiMethods.ProcessScan(textBoxScan.Text);
-			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
-			UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
-			UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
-			textBoxScan.Clear();
-			textBoxScan.Focus();
+			try
+			{
+				await _uiMethods.ProcessScan(textBoxScan.Text);
+				await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
+				UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
+				UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
+				textBoxScan.Clear();
+				textBoxScan.Focus();
+			}
+			catch (Exception ex)
+			{
+				labelStatus.Text = ex.Message;
+			}
 		}
 	}
 
