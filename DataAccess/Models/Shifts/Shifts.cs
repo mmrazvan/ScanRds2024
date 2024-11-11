@@ -16,11 +16,5 @@ public class Shifts
 
 	public double Speed { get; set; }
 
-	public string ShiftName
-	{
-		get
-		{
-			return _shiftStrategy.GetShiftName(_date);
-		}
-	}
+	public string ShiftName => _shiftStrategy.GetShiftName(_date);
 }
