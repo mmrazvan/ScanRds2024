@@ -82,6 +82,7 @@ public partial class ScanForm : Form
 			await _uiMethods.ProcessScan(textBoxScan.Text);
 			await _uiMethods.UpdateProgressbarAsync(progressBarScan, labelProgress);
 			UIMethods.PopulateRemainingCountyList(listBoxCounty, await _opisRepo.GetRemainingCountiesAsync());
+			UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
 			textBoxScan.Clear();
 			textBoxScan.Focus();
 		}
