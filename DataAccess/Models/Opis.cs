@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models;
 
-public partial class Opis
+public partial class Opis : IOpis
 {
 	[Key]
 	public int NumarCutie { get; set; }
