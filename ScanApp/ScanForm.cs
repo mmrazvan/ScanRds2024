@@ -1,8 +1,12 @@
 using DataAccess.Models;
 using DataAccess.Repos;
 
+using Microsoft.Extensions.Configuration;
+
 using ScanApp.Helpers;
 using ScanApp.Properties;
+
+using Serilog;
 
 namespace ScanApp;
 
@@ -22,9 +26,26 @@ public partial class ScanForm : Form
 		_headerRepo = new HeaderRepo(_context);
 		_workFolder = Settings.Default.WorkFolder;
 		_uiMethods = new UIMethods(_opisRepo, _headerRepo);
+
+		var builder = new ConfigurationBuilder();
+		BuildConfig(builder);
+		const string LogPath = "log.txt";
+		Log.Logger = new LoggerConfiguration()
+			.ReadFrom.Configuration(builder.Build())
+			.Enrich.FromLogContext()
+			.WriteTo.File(LogPath, rollingInterval: RollingInterval.Day)
+			.CreateLogger();
 	}
 
-	private async void Button1_Click( object sender, EventArgs e )
+	public static void BuildConfig( IConfigurationBuilder builder )
+	{
+		builder.SetBasePath(Directory.GetCurrentDirectory())
+			.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+			.AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}", optional: true)
+			.AddEnvironmentVariables();
+	}
+
+	private async void ButtonComplete_Click( object sender, EventArgs e )
 	{
 		foreach (var item in checkedListBox1.CheckedItems)
 		{
@@ -41,6 +62,7 @@ public partial class ScanForm : Form
 		catch (Exception ex)
 		{
 			labelStatus.Text = ex.Message;
+			Log.Logger.Error(ex.Message);
 		}
 		UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
 		textBoxScan.Focus();
@@ -58,6 +80,7 @@ public partial class ScanForm : Form
 		catch (Exception ex)
 		{
 			labelStatus.Text = ex.Message;
+			Log.Logger.Error(ex.Message);
 		}
 		textBoxScan.Focus();
 	}
@@ -91,6 +114,7 @@ public partial class ScanForm : Form
 			catch (Exception ex)
 			{
 				labelStatus.Text = ex.Message;
+				Log.Logger.Error(ex.Message);
 			}
 		}
 	}
@@ -107,6 +131,7 @@ public partial class ScanForm : Form
 			catch (Exception ex)
 			{
 				labelStatus.Text = ex.Message;
+				Log.Logger.Error(ex.Message);
 			}
 		}
 	}

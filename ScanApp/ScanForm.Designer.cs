@@ -28,7 +28,7 @@ partial class ScanForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		button1 = new Button();
+		buttonComplete = new Button();
 		textBoxScan = new TextBox();
 		progressBarScan = new ProgressBar();
 		labelProgress = new Label();
@@ -49,16 +49,16 @@ partial class ScanForm
 		groupBox3.SuspendLayout();
 		SuspendLayout();
 		// 
-		// button1
+		// buttonComplete
 		// 
-		button1.Anchor =     AnchorStyles.Top  |  AnchorStyles.Right ;
-		button1.Location = new Point(250, 18);
-		button1.Name = "button1";
-		button1.Size = new Size(120, 38);
-		button1.TabIndex = 0;
-		button1.Text = "Complete";
-		button1.UseVisualStyleBackColor = true;
-		button1.Click +=  Button1_Click ;
+		buttonComplete.Anchor =     AnchorStyles.Top  |  AnchorStyles.Right ;
+		buttonComplete.Location = new Point(250, 18);
+		buttonComplete.Name = "buttonComplete";
+		buttonComplete.Size = new Size(120, 38);
+		buttonComplete.TabIndex = 0;
+		buttonComplete.Text = "Complete";
+		buttonComplete.UseVisualStyleBackColor = true;
+		buttonComplete.Click +=  ButtonComplete_Click ;
 		// 
 		// textBoxScan
 		// 
@@ -167,7 +167,7 @@ partial class ScanForm
 		groupBox2.Anchor =      AnchorStyles.Top  |  AnchorStyles.Bottom   |  AnchorStyles.Right ;
 		groupBox2.Controls.Add(labelCountyDetails);
 		groupBox2.Controls.Add(listBoxCounty);
-		groupBox2.Controls.Add(button1);
+		groupBox2.Controls.Add(buttonComplete);
 		groupBox2.Controls.Add(buttonSelectAll);
 		groupBox2.Controls.Add(checkedListBox1);
 		groupBox2.Location = new Point(624, 154);
@@ -255,7 +255,7 @@ partial class ScanForm
 
 	#endregion
 
-	private Button button1;
+	private Button buttonComplete;
 	private TextBox textBoxScan;
 	private ProgressBar progressBarScan;
 	private Label labelProgress;
