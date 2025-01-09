@@ -37,13 +37,10 @@ public partial class ScanForm : Form
 			.CreateLogger();
 	}
 
-	public static void BuildConfig( IConfigurationBuilder builder )
-	{
-		builder.SetBasePath(Directory.GetCurrentDirectory())
+	public static void BuildConfig( IConfigurationBuilder builder ) => builder.SetBasePath(Directory.GetCurrentDirectory())
 			.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 			.AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}", optional: true)
 			.AddEnvironmentVariables();
-	}
 
 	private async void ButtonComplete_Click( object sender, EventArgs e )
 	{
@@ -62,7 +59,7 @@ public partial class ScanForm : Form
 		catch (Exception ex)
 		{
 			labelStatus.Text = ex.Message;
-			Log.Logger.Error(ex.Message);
+			Log.Logger.Error(ex, ex.Message);
 		}
 		UIMethods.PopulateListBoxDetails(listBoxDetails, await _uiMethods.GetDaysWithShifts());
 		textBoxScan.Focus();
@@ -80,7 +77,7 @@ public partial class ScanForm : Form
 		catch (Exception ex)
 		{
 			labelStatus.Text = ex.Message;
-			Log.Logger.Error(ex.Message);
+			Log.Logger.Error(ex, ex.Message);
 		}
 		textBoxScan.Focus();
 	}
@@ -114,7 +111,7 @@ public partial class ScanForm : Form
 			catch (Exception ex)
 			{
 				labelStatus.Text = ex.Message;
-				Log.Logger.Error(ex.Message);
+				Log.Logger.Error(ex, ex.Message);
 			}
 		}
 	}
@@ -131,17 +128,15 @@ public partial class ScanForm : Form
 			catch (Exception ex)
 			{
 				labelStatus.Text = ex.Message;
-				Log.Logger.Error(ex.Message);
+				Log.Logger.Error(ex, ex.Message);
 			}
 		}
 	}
 
-	private async void Button2_Click( object sender, EventArgs e )
-	{
+	private async void Button2_Click( object sender, EventArgs e ) =>
 		// This method is intentionally left empty.
 		// Future implementation can be added here if needed.
 		await Task.CompletedTask;
-	}
 
 	private void ButtonSelectAll_Click( object sender, EventArgs e )
 	{

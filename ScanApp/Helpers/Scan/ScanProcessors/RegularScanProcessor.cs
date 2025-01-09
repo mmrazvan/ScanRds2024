@@ -3,14 +3,9 @@ using DataAccess.Repos;
 
 namespace ScanApp.Helpers.Scan.ScanProcessors;
 
-public class RegularScanProcessor : IScanProcessor
+public class RegularScanProcessor( IOpisRepo opisRepo ) : IScanProcessor
 {
-	private readonly IOpisRepo _opisRepo;
-
-	public RegularScanProcessor( IOpisRepo opisRepo )
-	{
-		_opisRepo = opisRepo;
-	}
+	private readonly IOpisRepo _opisRepo = opisRepo;
 
 	public async Task ProcessScan( CodeData codeData )
 	{

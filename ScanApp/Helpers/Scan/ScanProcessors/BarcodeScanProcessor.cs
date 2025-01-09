@@ -3,14 +3,9 @@ using DataAccess.Repos;
 
 namespace ScanApp.Helpers.Scan.ScanProcessors;
 
-public class BarcodeScanProcessor : IScanProcessor
+public class BarcodeScanProcessor( IHeaderRepo headerRepo ) : IScanProcessor
 {
-	private readonly IHeaderRepo _headerRepo;
-
-	public BarcodeScanProcessor( IHeaderRepo headerRepo )
-	{
-		_headerRepo = headerRepo;
-	}
+	private readonly IHeaderRepo _headerRepo = headerRepo;
 
 	public async Task ProcessScan( CodeData codeData )
 	{

@@ -7,16 +7,10 @@ using ScanApp.Helpers.Scan.ScanProcessors;
 
 namespace ScanApp.Helpers;
 
-public class UIMethods
+public class UIMethods( IOpisRepo opisRepo, IHeaderRepo headerRepo )
 {
-	private readonly IOpisRepo _opisRepo;
-	private readonly IHeaderRepo _headerRepo;
-
-	public UIMethods( IOpisRepo opisRepo, IHeaderRepo headerRepo )
-	{
-		_opisRepo = opisRepo;
-		_headerRepo = headerRepo;
-	}
+	private readonly IOpisRepo _opisRepo = opisRepo;
+	private readonly IHeaderRepo _headerRepo = headerRepo;
 
 	public async Task ProcessScan( string scanText )
 	{
